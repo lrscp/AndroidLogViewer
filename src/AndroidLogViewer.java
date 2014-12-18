@@ -223,8 +223,8 @@ public class AndroidLogViewer extends Shell {
             display = Display.getDefault();
             if (isServerPortInUse()) {
                 MessageBox msg = new MessageBox(new Shell());
-                msg.setText("提示");
-                msg.setMessage("LogViewer已经启动");
+                msg.setText("Warning");
+                msg.setMessage("AndroidLogViewer is running!");
                 msg.open();
                 Display.getDefault().readAndDispatch();
                 System.exit(0);
@@ -340,7 +340,7 @@ public class AndroidLogViewer extends Shell {
 
         Label lblLog = new Label(cpLeft, SWT.NONE);
         lblLog.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-        lblLog.setText("Log客户端");
+        lblLog.setText("Clients");
 
         list = new org.eclipse.swt.widgets.List(cpLeft, SWT.BORDER | SWT.RESIZE);
         GridData gd_list = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -349,7 +349,7 @@ public class AndroidLogViewer extends Shell {
 
         Label label = new Label(cpLeft, SWT.NONE);
         label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-        label.setText("过滤器");
+        label.setText("Filters");
 
         composite_1 = new Composite(cpLeft, SWT.NONE);
         composite_1.setLayout(new GridLayout(3, false));
@@ -364,7 +364,7 @@ public class AndroidLogViewer extends Shell {
         });
         butnAddFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         butnAddFilter.setBounds(0, 0, 92, 30);
-        butnAddFilter.setText("添加");
+        butnAddFilter.setText("Add");
 
         Button butnDelFilter = new Button(composite_1, SWT.NONE);
         butnDelFilter.addSelectionListener(new SelectionAdapter() {
@@ -377,7 +377,7 @@ public class AndroidLogViewer extends Shell {
             }
         });
         butnDelFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        butnDelFilter.setText("删除");
+        butnDelFilter.setText("Delete");
 
         Button butnEditFilter = new Button(composite_1, SWT.NONE);
         butnEditFilter.addSelectionListener(new SelectionAdapter() {
@@ -390,7 +390,7 @@ public class AndroidLogViewer extends Shell {
             }
         });
         butnEditFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        butnEditFilter.setText("编辑");
+        butnEditFilter.setText("Edit");
 
         list.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -448,7 +448,7 @@ public class AndroidLogViewer extends Shell {
                 onClearLogs();
             }
         });
-        butnClear.setText("清空");
+        butnClear.setText("Clear");
 
         cbLevel = new Combo(composite, SWT.NONE);
         GridData gd_combo = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
@@ -596,7 +596,7 @@ public class AndroidLogViewer extends Shell {
     }
 
     protected void createDelFilterDialog(int index) {
-        if (SwtUtils.messageOkCancel(shell, "提示", "确定删除该过滤器：" + mFilterConfigs.get(index).name)) {
+        if (SwtUtils.messageOkCancel(shell, "Warning", "Are you sure to delete this filter? " + mFilterConfigs.get(index).name)) {
             mFilterConfigs.remove(index);
             mFilterListView.remove(index, index);
             saveFilters();
@@ -707,7 +707,7 @@ public class AndroidLogViewer extends Shell {
         }
 
         final MenuItem itemCopy = new MenuItem(popUpMenu, SWT.PUSH);
-        itemCopy.setText("复制Log");
+        itemCopy.setText("Copy Log");
         itemCopy.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (table.getSelection().length > 0) {
@@ -752,7 +752,7 @@ public class AndroidLogViewer extends Shell {
         // new MenuItem(popUpMenu, SWT.SEPARATOR);
 
         final MenuItem itemAddFastLocate = new MenuItem(popUpMenu, SWT.PUSH);
-        itemAddFastLocate.setText("添加到快速定位菜单");
+        itemAddFastLocate.setText("Add to fast location list");
         itemAddFastLocate.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (table.getSelection().length > 0) {
@@ -783,7 +783,7 @@ public class AndroidLogViewer extends Shell {
         }
 
         final MenuItem item = new MenuItem(popUpMenu, SWT.PUSH);
-        item.setText("清除记录");
+        item.setText("Clear fast location list");
         item.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 mFastLocateItems.clear();
@@ -831,7 +831,7 @@ public class AndroidLogViewer extends Shell {
 
     private String getTitle() {
         StringBuilder sb = new StringBuilder();
-        sb.append("山歌 Android Log Viewer");
+        sb.append("Android Log Viewer By lrscp");
         if (mCurFile != null) {
             sb.append(" -- ");
             sb.append(mCurFile.getAbsolutePath());
@@ -927,7 +927,7 @@ public class AndroidLogViewer extends Shell {
     private void scrollToItem(LogInfo log) {
         if (getCurLogFilter().consume(log)) {
             // item is not showing in the table
-            showMsg("当前列表没有该log");
+            showMsg("The log is not found!");
             return;
         }
 
