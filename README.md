@@ -10,13 +10,20 @@ Overview
 
 Functions
 ---------
-- **Parse android log file and show them in a colorful way, similar to the DDMS's logcat. The difference is this can show log file which DDMS's logcat can't do.**
-- **Filt log items, so that you will find desired log more efficiently.**
-- **Copy log item or items.**
-- **Add log item to fast location list.**<br>
-  This is a very useful function when you want to locate the log item when you change your filter or some other situations.
-- **Listening for log clients using tcp and show logs in real time.**<br>
-  This is a simple protocol for my application development. Using an unified tool to manage logs from many applications that I developed.
+
+- Parse android log file and show them in a colorful way, similar to the DDMS's logcat. The difference is this can show log file which DDMS's logcat can't do.
+
+- Filter log items, so that you will find desired log more efficiently.
+
+- Copy log item or items.
+
+- Add log item to fast location list.<br>
+
+	This is a very useful function when you want to locate the log item when you change your filter or some other situations.
+
+- Listening for log clients using tcp and show logs in real time
+  		
+	This is a simple protocol for my application development. Using an unified tool to manage logs from many applications that I developed.
 
 
 Contact me
