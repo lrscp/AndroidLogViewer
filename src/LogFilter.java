@@ -34,8 +34,8 @@ public class LogFilter {
                 return false;
             }
 
-            if (!isShowExtra) {
-                return log.tag == null || log.tag.isEmpty();
+            if (!isShowExtra && (log.tag == null || log.tag.isEmpty())) {
+                return true;
             }
             
             if (pid != null && !log.pid.equals(pid)) {
