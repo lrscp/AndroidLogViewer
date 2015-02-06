@@ -322,6 +322,9 @@ public class AndroidLogViewer extends Shell {
 
     private List<FilterConfig> mFilterConfigs = new ArrayList<FilterConfig>();
     private Button butnClear;
+    private Button checkShowUnTaged;
+
+    private boolean isShowExtra = true;
 
     /**
      * Create the shell.
@@ -411,7 +414,7 @@ public class AndroidLogViewer extends Shell {
         mFilterListView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 
         Composite composite = new Composite(this, SWT.NONE);
-        composite.setLayout(new GridLayout(4, false));
+        composite.setLayout(new GridLayout(5, false));
         composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         text = new Text(composite, SWT.BORDER);
@@ -440,6 +443,16 @@ public class AndroidLogViewer extends Shell {
         btnCheckButton.setText("scroll");
         btnCheckButton.setSelection(true);
         mScrollEnabled = btnCheckButton.getSelection();
+
+        checkShowUnTaged = new Button(composite, SWT.CHECK);
+        checkShowUnTaged.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent arg0) {
+                handleCheckShowExtra();
+            }
+        });
+        checkShowUnTaged.setText("Show Extra");
+        checkShowUnTaged.setSelection(true);
 
         butnClear = new Button(composite, SWT.NONE);
         butnClear.addSelectionListener(new SelectionAdapter() {
@@ -545,6 +558,11 @@ public class AndroidLogViewer extends Shell {
         tblclmnContent.addControlListener(createControlLsnr("contentColumnW", tblclmnContent));
 
         createContents();
+    }
+
+    protected void handleCheckShowExtra() {
+        isShowExtra = checkShowUnTaged.getSelection();
+        loadTableByCurrentFilter();
     }
 
     protected void onClearLogs() {
@@ -873,7 +891,7 @@ public class AndroidLogViewer extends Shell {
         table.removeAll();
         mFilteredLogs.clear();
         for (final LogInfo log : getLogSource()) {
-            if (!filter.consume(log)) {
+            if (!filter.consume(log, isShowExtra)) {
                 mFilteredLogs.add(log);
             }
         }
@@ -925,7 +943,7 @@ public class AndroidLogViewer extends Shell {
     }
 
     private void scrollToItem(LogInfo log) {
-        if (getCurLogFilter().consume(log)) {
+        if (getCurLogFilter().consume(log, isShowExtra)) {
             // item is not showing in the table
             showMsg("The log is not found!");
             return;
@@ -1007,7 +1025,7 @@ public class AndroidLogViewer extends Shell {
      */
     private void onTableLogAdded(LogInfo log) {
         LogFilter filter = getCurLogFilter();
-        if (!filter.consume(log)) {
+        if (!filter.consume(log, isShowExtra)) {
             mFilteredLogs.add(log);
         }
         table.setItemCount(mFilteredLogs.size());

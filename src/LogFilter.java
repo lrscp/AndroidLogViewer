@@ -25,15 +25,19 @@ public class LogFilter {
                 keywords.add(s);
             }
         }
-//        Log.d(TAG, "tag=" + tag);
+        // Log.d(TAG, "tag=" + tag);
     }
 
-    public boolean consume(LogInfo log) {
+    public boolean consume(LogInfo log, boolean isShowExtra) {
         try {
             if (log.tag.contains("DEBUG") || log.tag.contains("libc")) {
                 return false;
             }
 
+            if (!isShowExtra) {
+                return log.tag == null || log.tag.isEmpty();
+            }
+            
             if (pid != null && !log.pid.equals(pid)) {
                 return true;
             }
